@@ -4,7 +4,7 @@ save_data_on_exit = True
 save_history = True
 save_non_project_files = False
 project_type = 'empty-project-type'
-recent_files = ['C:\\Users\\Jan Calalo\\.spyder-py3\\temp.py', 'WeeklyFitting.py', 'Bad_QB_vs_TE_Targets.py']
+recent_files = ['C:\\Users\\Jan Calalo\\.spyder-py3\\temp.py', 'WeeklyFitting.py', 'Bad_QB_vs_TE_Targets.py', '..\\..\\fantasymock2.py', 'Rush Yards per Carry.py', 'H:\\My Drive\\Fantasy Football\\Rush Yards per Carry.py']
 
 [main]
 version = 0.2.0
