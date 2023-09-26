@@ -15,11 +15,11 @@ import scipy.optimize as opti
 import pandas as pd
 import matplotlib.pyplot as plt
 
-#%%
+#%% load all players
 
 playernfl = nfl.import_players()
 
-#%%
+#%% load relevant years
 relevant_years = np.arange(2010,2023).tolist()
 relevant_data = ['player_id','position','receptions','targets','rushing_yards','receiving_yards',
                  'passing_yards','season_type','season','week','receiving_tds','rushing_attempts']
@@ -28,7 +28,7 @@ relevant_data = ['player_id','position','receptions','targets','rushing_yards','
 test_out = nfl.import_seasonal_data(relevant_years,s_type = 'REG')
 
 
-#%%
+#%% generate positional list from seasonal finishes
 
 test_out['POS'] = np.nan
 seasonal_data_w_pos = test_out
@@ -43,12 +43,12 @@ for x in range(len(test_out)):
 
 test_out['Player_Names'] = player_names
 test_out['Positions'] = pos_out
-#%%
+#%% Generating list for just rbs
 
 rb_season_data = test_out[test_out['Positions'] == 'RB'][['player_id','season','Positions','Player_Names','fantasy_points_ppr','fantasy_points']]
 rb_season_data['Season_Finish'] = np.nan
 rb_season_data = rb_season_data.reset_index()
-#%%
+#%%sorting rb seasons and getting their finishes
 x = 0
 curr_year = relevant_years[x]
 
@@ -64,7 +64,7 @@ for curr_year in relevant_years:
         rb_season_data['Season_Finish'][curr_index] = y+1
 
 
-#%%
+#%% looking at number of top 20 rbs
 
 top_20rbs = rb_season_data[rb_season_data['Season_Finish'] <= 20].reset_index()
 
@@ -85,7 +85,7 @@ for m in range(1,21):
             
 
 
-#%%
+#%%% plot repeat 1 season fantasy finish
 
 curr_fig = plt.figure()
 curr_ax = curr_fig.add_axes([.15,.15,.8,.8])
@@ -102,7 +102,7 @@ curr_ax.set_title('Likelihood RB Repeating a Top 20 Finish ')
 
 curr_ax.set_ylabel('Likelihood\nTop 20 RB finish(%)')
 
-#%%
+#%% calculate 2 repeat seasons after top 20 finish
 
 number_repeats = np.zeros(20)
 for m in range(1,21):
@@ -118,7 +118,7 @@ for m in range(1,21):
             
 
 
-#%%
+#%%% plot 2 repeat seasons after top 20 finish
 
 curr_fig = plt.figure()
 curr_ax = curr_fig.add_axes([.15,.15,.8,.8])
@@ -135,7 +135,7 @@ curr_ax.set_title('Likelihood RB Repeating a Top 20\nFinish in both the next 2 s
 
 curr_ax.set_ylabel('Likelihood\nTop 20 RB finish (%)')
 
-#%%
+#%% calculate either of 2 fololowing seasons after top 20 finish
 
 number_repeats = np.zeros(20)
 for m in range(1,21):
@@ -154,7 +154,7 @@ for m in range(1,21):
             
 
 
-#%%
+#%%% plot either of 2 fololowing seasons after top 20 finish
 
 curr_fig = plt.figure()
 curr_ax = curr_fig.add_axes([.15,.15,.8,.8])
