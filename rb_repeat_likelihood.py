@@ -28,7 +28,6 @@ relevant_data = ['player_id','position','receptions','targets','rushing_yards','
 allplayer_seasonal = nfl.import_seasonal_data(relevant_years,s_type = 'REG')
 
 
-#%%
 #%% generate positional list from seasonal finishes
 
 #%% sorting player positions in outcomes
