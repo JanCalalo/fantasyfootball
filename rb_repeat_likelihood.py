@@ -38,27 +38,22 @@ for x in range(len(allplayer_seasonal)):
     pos_out.append(playernfl[playernfl['gsis_id'] == allplayer_seasonal['player_id'][x]]['position'].values[0])
     
 
-<<<<<<< HEAD
 allplayer_seasonal['Player_Names'] = player_names
 allplayer_seasonal['Positions'] = pos_out
 #%%
-=======
+
 test_out['Player_Names'] = player_names
 test_out['Positions'] = pos_out
 #%% Generating list for just rbs
->>>>>>> a3a6f67a4b1dd0cfb10ee87cfc5c8a17f3358f59
 
 rb_season_data = allplayer_seasonal[allplayer_seasonal['Positions'] == 'RB'][['player_id','games','season','Positions','Player_Names','fantasy_points_ppr','fantasy_points']]
 rb_season_data['Season_Finish'] = np.nan
 rb_season_data = rb_season_data.reset_index()
-<<<<<<< HEAD
 
 rb_season_data['FPG'] = rb_season_data['fantasy_points']/rb_season_data['games']
 
-#%%
-=======
+
 #%%sorting rb seasons and getting their finishes
->>>>>>> a3a6f67a4b1dd0cfb10ee87cfc5c8a17f3358f59
 x = 0
 curr_year = relevant_years[x]
 
@@ -74,12 +69,10 @@ for curr_year in relevant_years:
         rb_season_data['Season_Finish'][curr_index] = y+1
 
 
-<<<<<<< HEAD
 #%%
+### DEFINE THRESHOLD FOR "GREAT"
 great_thresh = 10
-=======
 #%% looking at number of top 20 rbs
->>>>>>> a3a6f67a4b1dd0cfb10ee87cfc5c8a17f3358f59
 
 top_20rbs = rb_season_data[rb_season_data['Season_Finish'] <= great_thresh].reset_index()
 
@@ -114,8 +107,7 @@ curr_ax.spines['right'].set_visible(False)
 
 curr_ax.set_xlabel('Season Fantasy Finish (Rank)')
 curr_ax.set_title(f'Likelihood RB Repeating a Top {great_thresh} Finish ')
-
-curr_ax.set_ylabel(f'Likelihood\nTop {great_thresh} RB finish(%)')
+curr_ax.set_ylabel(f'Likelihood\nTop {great_thresh} RB finish (%)')
 
 #%% calculate 2 repeat seasons after top 20 finish
 
@@ -147,7 +139,6 @@ curr_ax.spines['right'].set_visible(False)
 
 curr_ax.set_xlabel('Season Fantasy Finish (Rank)')
 curr_ax.set_title(f'Likelihood RB Repeating a Top {great_thresh}\nFinish in both the next 2 seasons',y =1 ,pad = -15)
-
 curr_ax.set_ylabel(f'Likelihood\nTop {great_thresh} RB finish (%)')
 
 #%% calculate either of 2 fololowing seasons after top 20 finish
@@ -184,8 +175,4 @@ curr_ax.spines['right'].set_visible(False)
 curr_ax.set_xlabel('Season Fantasy Finish (Rank)')
 curr_ax.set_title(f'Likelihood RB Repeating a Top {great_thresh}\nFinish in at least one of the next 2 seasons',y =1 ,pad = -15)
 
-<<<<<<< HEAD
 curr_ax.set_ylabel(f'Likelihood\nTop {great_thresh} RB finish (%)')
-=======
-curr_ax.set_ylabel('Likelihood\nTop 20 RB finish (%)')
->>>>>>> a3a6f67a4b1dd0cfb10ee87cfc5c8a17f3358f59
