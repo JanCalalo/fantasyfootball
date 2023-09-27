@@ -15,12 +15,10 @@ import scipy.optimize as opti
 import pandas as pd
 import matplotlib.pyplot as plt
 
-#%%
 #%% load all players
 
 playernfl = nfl.import_players()
 
-#%%
 #%% load relevant years
 relevant_years = np.arange(2010,2023).tolist()
 relevant_data = ['player_id','position','receptions','targets','rushing_yards','receiving_yards',
@@ -54,10 +52,14 @@ test_out['Positions'] = pos_out
 rb_season_data = allplayer_seasonal[allplayer_seasonal['Positions'] == 'RB'][['player_id','games','season','Positions','Player_Names','fantasy_points_ppr','fantasy_points']]
 rb_season_data['Season_Finish'] = np.nan
 rb_season_data = rb_season_data.reset_index()
+<<<<<<< HEAD
 
 rb_season_data['FPG'] = rb_season_data['fantasy_points']/rb_season_data['games']
 
 #%%
+=======
+#%%sorting rb seasons and getting their finishes
+>>>>>>> a3a6f67a4b1dd0cfb10ee87cfc5c8a17f3358f59
 x = 0
 curr_year = relevant_years[x]
 
@@ -73,8 +75,12 @@ for curr_year in relevant_years:
         rb_season_data['Season_Finish'][curr_index] = y+1
 
 
+<<<<<<< HEAD
 #%%
 great_thresh = 10
+=======
+#%% looking at number of top 20 rbs
+>>>>>>> a3a6f67a4b1dd0cfb10ee87cfc5c8a17f3358f59
 
 top_20rbs = rb_season_data[rb_season_data['Season_Finish'] <= great_thresh].reset_index()
 
@@ -95,7 +101,7 @@ for m in range(1,great_thresh+1):
             
 
 
-#%%
+#%%% plot repeat 1 season fantasy finish
 
 curr_fig = plt.figure()
 curr_ax = curr_fig.add_axes([.15,.15,.8,.8])
@@ -112,6 +118,7 @@ curr_ax.set_title(f'Likelihood RB Repeating a Top {great_thresh} Finish ')
 
 curr_ax.set_ylabel(f'Likelihood\nTop {great_thresh} RB finish(%)')
 
+#%% calculate 2 repeat seasons after top 20 finish
 
 number_repeats = np.zeros(great_thresh)
 for m in range(1,great_thresh+1):
