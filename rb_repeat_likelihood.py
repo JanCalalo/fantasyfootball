@@ -25,27 +25,24 @@ relevant_data = ['player_id','position','receptions','targets','rushing_yards','
                  'passing_yards','season_type','season','week','receiving_tds','rushing_attempts']
 # player_catches_targets = nfl.import_weekly_data(relevant_years)#, columns = relevant_data)
 
-test_out = nfl.import_seasonal_data(relevant_years,s_type = 'REG')
+allplayer_seasonal = nfl.import_seasonal_data(relevant_years,s_type = 'REG')
 
 
 #%%
 
-test_out['POS'] = np.nan
-seasonal_data_w_pos = test_out
-unique_player_ids = seasonal_data_w_pos['player_id'].unique()
 #%% sorting player positions in outcomes
 player_names = []
 pos_out = []
-for x in range(len(test_out)):
-    player_names.append(playernfl[playernfl['gsis_id'] == test_out['player_id'][x]]['display_name'].values[0])
-    pos_out.append(playernfl[playernfl['gsis_id'] == test_out['player_id'][x]]['position'].values[0])
+for x in range(len(allplayer_seasonal)):
+    player_names.append(playernfl[playernfl['gsis_id'] == allplayer_seasonal['player_id'][x]]['display_name'].values[0])
+    pos_out.append(playernfl[playernfl['gsis_id'] == allplayer_seasonal['player_id'][x]]['position'].values[0])
     
 
-test_out['Player_Names'] = player_names
-test_out['Positions'] = pos_out
+allplayer_seasonal['Player_Names'] = player_names
+allplayer_seasonal['Positions'] = pos_out
 #%%
 
-rb_season_data = test_out[test_out['Positions'] == 'RB'][['player_id','games','season','Positions','Player_Names','fantasy_points_ppr','fantasy_points']]
+rb_season_data = allplayer_seasonal[allplayer_seasonal['Positions'] == 'RB'][['player_id','games','season','Positions','Player_Names','fantasy_points_ppr','fantasy_points']]
 rb_season_data['Season_Finish'] = np.nan
 rb_season_data = rb_season_data.reset_index()
 
