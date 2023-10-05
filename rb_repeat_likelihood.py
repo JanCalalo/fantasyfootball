@@ -46,7 +46,6 @@ allplayer_seasonal['Positions'] = pos_out
 
 rb_season_data = allplayer_seasonal[allplayer_seasonal['Positions'] == Selected_Position][['player_id','games','season','Positions','Player_Names','fantasy_points_ppr','fantasy_points']]
 rb_season_data['Season_Finish'] = np.nan
-rb_season_data = rb_season_data.reset_index()
 
 rb_season_data['FPG'] = rb_season_data['fantasy_points']/rb_season_data['games']
 
