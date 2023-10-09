@@ -23,3 +23,16 @@ def sorting_dataframe(input_dataframe,sorting_column):
     
     
     return curr_dataframe['Rank']
+
+def reset_team_names(df):
+    
+    repeat_list = [['OAK','LVR','RAI'],
+    ['PHO','ARI'],
+    ['STL','RAM','LAR'],
+    ['SDG','LAC']]
+    for curr_repeat_list in repeat_list:
+        curr_name = curr_repeat_list[-1] 
+        for z in curr_repeat_list:
+            df.loc[df['team'] == f'{z}','team'] = curr_name
+            
+    return df
