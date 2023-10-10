@@ -89,7 +89,23 @@ for x,curr_year in enumerate(relevant_years):
             pos_weekly_standings[f'{curr_year}_{z+1}_FPTS'][pos_weekly_standings['player_id'] ==curr_dataframe_out.index[p]] = curr_dataframe_out['Calculated_Fantasy_Points'][p]
             pos_weekly_standings[f'{curr_year}_{z+1}_FPTS_per_game'][pos_weekly_standings['player_id'] ==curr_dataframe_out.index[p]] = curr_dataframe_out['Calculated_Fantasy_Points'][p]/(z+1)
 
-        
+#%%
+df = pd.DataFrame()
+for z in range(max_weeks):
+
+# for x,curr_year in enumerate(relevant_years):
+
+    week_sort = np.where(allplayer_weekly_pos['week'] <= z+1,f'uptoweek_{z+1}',False)
+
+    # above_3rd_round = np.where((reset_names_draft_picks.query(f'season >= {since_season}& (allpro>0 or probowls > 0)')['round'] > 3), 'Round 1-3', 'Round >=4')
+
+    df_out = allplayer_weekly_pos.groupby(['season',week_sort,'player_id'],as_index = False).mean()
+    df_out[f'{z+1}'] = df_out['Calculated_Fantasy_Points'].rank(method = 'average',ascending = False)
+    
+    
+    
+    # df1 = allplayer_weekly_pos.groupby(['season',week_sort,'player_id'],as_index = False)['Calculated_Fantasy_Points'].mean().rank(ascending = False)
+    # df = pd.concat([df,df1])
 #%%
 
 column_list = pos_weekly_standings.columns.tolist()
@@ -99,7 +115,7 @@ fpts_rank_list = [x for x in column_list if '_FPTS_per_game' in x]
 
 column_rank_list = [x.replace('FPTS','Rank') for x in fpts_list]
 
-iteration_list = fpts_rank_list
+iteration_list = column_rank_list
 pos_weekly_standings[column_rank_list] = np.nan
 for z in range(len(fpts_list)):
     curr_week_standings_no_out = pos_weekly_standings[['player_id',iteration_list[z]]].dropna().reset_index().drop(columns = ['index'])
@@ -124,6 +140,8 @@ for k in range(1,16):
     curr_week_list = []
     for i in range(len(temp_week_rank_list)):
         temp_out = pos_weekly_standings[pos_weekly_standings[temp_week_rank_list[i]].notna()][[temp_week_rank_list[i],end_week_rank_list[i]]]
+        
+        # temp_out = temp_out[temp_out['curr_week_rank']]
         curr_week_list.append(temp_out.to_numpy())
     
     temp_out_2 = np.concatenate(curr_week_list)
