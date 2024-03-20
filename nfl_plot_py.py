@@ -2,6 +2,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import nfl_data_py as nfl
+from PIL import image as pil_image
 
 team_desc = nfl.import_team_desc()
 
@@ -20,7 +21,7 @@ def logo_scatter_indiv(ax,x,y,s,team_abbr = None,team_id= None):
         raise ValueError("No Team Identifier")
 
     im_ax =ax.inset_axes([x-s/2,y-s/2,s/2,s/2], transform=ax.transData)
-    im_ax.imshow(plt.imread(team_logo_url))
+    im_ax.imshow(pil_image.open(team_logo_url))
     return(ax)
 
 def logo_scatter(ax,x,y,s,team_abbrs=None,team_ids=None):
