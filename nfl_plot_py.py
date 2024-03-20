@@ -22,7 +22,7 @@ def logo_scatter_indiv(ax,x,y,s,team_abbr = None,team_id= None):
     else:
         raise ValueError("No Team Identifier")
 
-    im_ax =ax.inset_axes([x-s/2,y-s/2,s/2,s/2], transform=ax.transData)
+    im_ax =ax.inset_axes([x/np.diff(ax.get_xlim())-s/2,y/np.diff(ax.get_ylim())-s/2,s/2,s/2])
     #im_ax.imshow(pil_image.open(team_logo_url))
 
     response = requests.get(team_logo_url)
