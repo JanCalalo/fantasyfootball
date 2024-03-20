@@ -13,12 +13,12 @@ def logo_scatter_indiv(ax,x,y,s,team_abbr = None,team_id= None):
     if team_abbr is not None:
 
 
-        team_logo_url = team_desc[team_desc['team_abbr'] == team_abbr]['team_logo_wikipedia'][0]
+        team_logo_url = team_desc[team_desc['team_abbr'] == team_abbr]['team_logo_wikipedia'].to_list()[0]
 
     elif team_id is not None:
 
 
-        team_logo_url = team_desc[team_desc['team_id'] == team_id]['team_logo_wikipedia'][0]
+        team_logo_url = team_desc[team_desc['team_id'] == team_id]['team_logo_wikipedia'].to_list()[0]
     else:
         raise ValueError("No Team Identifier")
 
