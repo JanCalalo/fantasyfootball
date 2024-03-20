@@ -2,7 +2,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import nfl_data_py as nfl
-from PIL import image as pil_image
+from pillow import image as pil_image
 
 team_desc = nfl.import_team_desc()
 
