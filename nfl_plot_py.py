@@ -7,24 +7,18 @@ import requests
 from io import BytesIO
 
 team_desc = nfl.import_team_desc()
-team_desc['loaded_logos'] = [[] for x in range(len(team_desc))]
-for i in range(len(team_desc)):
-    curr_im = team_desc.loc[i,'team_logo_espn']
-    loaded_im = np.asarray(pil_image.open(BytesIO(requests.get(curr_im).content)))
-    team_desc.loc[i,'loaded_logos'] = [loaded_im]
-
 
 def logo_scatter_indiv(ax,x,y,s,team_abbr = None,team_id= None):
 
     if team_abbr is not None:
 
 
-        img = team_desc[team_desc['team_abbr'] == team_abbr]['loaded_logos'][0]
+        team_logo_url = team_desc[team_desc['team_abbr'] == team_abbr]['team_logo_espn'].to_list()[0]
 
     elif team_id is not None:
 
 
-        img = team_desc[team_desc['team_id'] == team_id]['loaded_logos'][0]
+        team_logo_url = team_desc[team_desc['team_id'] == team_id]['team_logo_espn'].to_list()[0]
     else:
         raise ValueError("No Team Identifier")
 
@@ -33,7 +27,8 @@ def logo_scatter_indiv(ax,x,y,s,team_abbr = None,team_id= None):
     im_ax =ax.inset_axes([x-s/2,y-s/2,s,s], transform=ax.transData)#, bbox_to_anchor=[0.5, 0.5], loc='center')
     
 
-    
+    response = requests.get(team_logo_url)
+    img = pil_image.open(BytesIO(response.content)) 
     im_ax.imshow(img)
 
     im_ax.set_aspect('equal')
