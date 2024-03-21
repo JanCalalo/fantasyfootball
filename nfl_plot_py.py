@@ -32,13 +32,15 @@ def logo_scatter_indiv(ax,x,y,s,team_abbr = None,team_id= None):
     im_ax.imshow(img)
 
     im_ax.set_aspect('equal')
-    #im_ax.spines['top'].set_visible(False)
-    #im_ax.spines['left'].set_visible(False)
-    #im_ax.spines['right'].set_visible(False)
-    #im_ax.spines['bottom'].set_visible(False)
-    im_ax.background_patch.set_visible(False)   # Background
-    im_ax.outline_patch.set_visible(False) 
-    remove_background 
+    currim_ax_ax.set_facecolor('none')
+    im_ax.spines['top'].set_visible(False)
+    im_ax.spines['right'].set_visible(False)
+    im_ax.spines['bottom'].set_visible(False)
+    im_ax.spines['left'].set_visible(False)
+    im_ax.get_xaxis().set_ticks([])
+    im_ax.get_yaxis().set_ticks([])
+    im_ax.set_xlabel('')
+    im_ax.set_ylabel('')
     return(ax)
 
 def logo_scatter(ax,x,y,s,team_abbrs=None,team_ids=None):
