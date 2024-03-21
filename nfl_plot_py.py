@@ -8,9 +8,6 @@ from io import BytesIO
 
 team_desc = nfl.import_team_desc()
 
-
-
-
 def logo_scatter_indiv(ax,x,y,s,team_abbr = None,team_id= None):
 
     if team_abbr is not None:
