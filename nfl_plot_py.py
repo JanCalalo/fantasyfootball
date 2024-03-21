@@ -32,7 +32,7 @@ def logo_scatter_indiv(ax,x,y,s,team_abbr = None,team_id= None):
     im_ax.imshow(img)
 
     im_ax.set_aspect('equal')
-    currim_ax_ax.set_facecolor('none')
+    im_ax.set_facecolor('none')
     im_ax.spines['top'].set_visible(False)
     im_ax.spines['right'].set_visible(False)
     im_ax.spines['bottom'].set_visible(False)
