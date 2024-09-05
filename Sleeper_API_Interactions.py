@@ -1,13 +1,12 @@
 """
 Get Player Names from Sleeper
-
-For Upload to Google Drive
+For Upload to Google Sheets
 """
 
 
 import requests
 import os
-
+import pandas as pd
 if True:
     player_list= requests.get("https://api.sleeper.app/v1/players/nfl").json()
 
