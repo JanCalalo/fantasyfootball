@@ -12,13 +12,17 @@ import scipy.stats as stats
 import scipy.optimize as opti
 #%%
 relevant_years = np.arange(2017,2023).tolist()
-relevant_data = ['player_id','position','receptions','targets','rushing_yards','receiving_yards','passing_yards','season_type','season','week','receiving_tds']
+relevant_data = ['player_id','position','receptions','targets',
+                 'rushing_yards','receiving_yards','passing_yards','season_type','season','week','receiving_tds']
 player_catches_targets = nfl.import_weekly_data(relevant_years, columns = relevant_data)
 
 #%%
 playernfl = nfl.import_players()
 #%%
 Player_name = "Ja'Marr Chase"
+Player_name = "Cooper Kupp"
+Player_name = "Amari Cooper"
+
 # Player_name = 'Lamar Jackson'
 # Player_name = 'Justin Fields'
 
@@ -26,13 +30,20 @@ select_player = playernfl[playernfl['display_name'] == Player_name]
 #%%
 player_catches_targets = player_catches_targets[player_catches_targets['position'] == 'WR']
 player_catches_targets_wr = player_catches_targets[player_catches_targets['season_type'] == 'REG']
-# player_catches_targets_wr = player_catches_targets[player_catches_targets['targets'] > 0]
+player_catches_targets_wr = player_catches_targets[player_catches_targets['targets'] > 3]
+player_catches_targets_wr['yards_per_targ'] = player_catches_targets_wr.receiving_yards * (1/player_catches_targets_wr.targets)
+player_catches_targets_wr['receptions_per_targ'] = player_catches_targets_wr.receptions * (1/player_catches_targets_wr.targets)
+
 
 metric_of_interest = ['receptions']
+metric_of_interest = ['targets']
+# metric_of_interest = ['yards_per_targ']
+
+metric_of_interest = ['receptions_per_targ']
 
 # metric_of_interest = ['rushing_yards','passing_yards']
 #%%
-cumulative = True
+cumulative = False
 if cumulative:
     Title = 'CDF'
 else:
@@ -47,8 +58,9 @@ reception_list = np.zeros_like(rushing_list)
 for x in range(len(rushing_list)):
     reception_list[x] = rushing_list[x] +  0
     
-curr_max = np.max(reception_list)
+curr_max = np.nanmax(reception_list)
 x_fit= np.arange(0,curr_max+2)-.5
+x_fit= np.arange(0,1,.10)
 
 
 binned_data = curr_ax.hist(reception_list,x_fit,density = True,cumulative= cumulative,color = 'grey')
@@ -58,6 +70,7 @@ binned_data = curr_ax.hist(reception_list,x_fit,density = True,cumulative= cumul
 
 data_out = stats.beta.fit(reception_list,fscale = curr_max+2)
 
+# data_out = stats.beta.fit(reception_list,fscale = 1)
 
 a = data_out[0]
 b = data_out[1]
@@ -122,7 +135,11 @@ curr_ax.set_ylim(0,np.nanmax([binned_data[0],binned_data_2[0]]))
 # curr_ax.set_yticks(np.linspace(0,1,6))
 joint_pdf = np.array([beta_data_out,beta_data_out_2])
 joint_pdf = joint_pdf[np.isfinite(joint_pdf)]
-new_ax.set_ylim(0,np.nanmax(joint_pdf))
+
+ylim_max = np.max([new_ax.get_ylim()[1],curr_ax.get_ylim()[1]])
+new_ax.set_ylim(0,ylim_max)
+curr_ax.set_ylim(0,ylim_max)
+
 # new_ax.set_yticks(np.linspace(0,1,6))
 
 curr_ax.set_ylabel(Title)
@@ -171,18 +188,24 @@ curr_ax.
 
 #%%
 
-Y_Data = player_catches_targets_wr['receiving_yards'].to_numpy()
+Y_Data = player_catches_targets_wr['receptions'].to_numpy()
 
-X_Data = player_catches_targets_wr['receptions'].to_numpy()
+X_Data = player_catches_targets_wr['targets'].to_numpy()
 
 
-Y_Data_spec = selected_catches_targets_wins['receiving_yards'].to_numpy()
+# Y_Data_spec = selected_catches_targets_wins['receiving_yards'].to_numpy()
 
-X_Data_spec = selected_catches_targets_wins['receptions'].to_numpy()
+# X_Data_spec = selected_catches_targets_wins['receptions'].to_numpy()
 
 #%%
 plt.figure()
 plt.scatter(X_Data,Y_Data,color = 'grey')
 
-plt.scatter(X_Data_spec,Y_Data_spec,color = 'blue')
-plt.show()
+
+#%%
+
+plt.figure()
+bins_fit = np.linspace(0,np.nanmax(X_Data),np.nanmax(X_Data)+1)
+plt.hist(X_Data,bins = bins_fit)
+# plt.scatter(X_Data_spec,Y_Data_spec,color = 'blue')
+# plt.show()
