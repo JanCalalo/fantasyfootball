@@ -30,7 +30,7 @@ allplayer_seasonal = nfl.import_seasonal_data(relevant_years,s_type = 'REG')
 
 #%% generate positional list from seasonal finishes
 
-Selected_Position = 'WR'
+Selected_Position = 'TE'
 #%% sorting player positions in outcomes
 player_names = []
 pos_out = []
