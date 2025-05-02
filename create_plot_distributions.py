@@ -16,7 +16,7 @@ player_list_dict = pd.DataFrame.from_dict(player_list,orient='index')
 active_players_sleeper_dataframe = player_list_dict[player_list_dict['status'] != 'Inactive']
 
 #%%
-list_of_leagues = ["https://sleeper.app/draft/nfl/1209304724965163008",
+list_of_leagues_raw = ["https://sleeper.app/draft/nfl/1209304724965163008",
 "https://sleeper.app/draft/nfl/1201718378352361472",
 "https://sleeper.app/draft/nfl/1199759549511249920",
 "https://sleeper.app/draft/nfl/1197693853444866048",
@@ -30,7 +30,17 @@ list_of_leagues = ["https://sleeper.app/draft/nfl/1209304724965163008",
 "https://sleeper.app/draft/nfl/1180125892624809985",
 "https://sleeper.com/draft/nfl/1180273953490202625",
 "https://sleeper.app/draft/nfl/1182497792344498177",
-"https://sleeper.com/draft/nfl/1182392767111606273"]
+"https://sleeper.com/draft/nfl/1182392767111606273",]
+#"https://sleeper.com/draft/nfl/1223094385000853504"]
+
+
+list_of_leagues = []
+for x in range(len(list_of_leagues_raw)):
+    if list_of_leagues_raw[x] in list_of_leagues:
+        _ = 1
+    else:
+        list_of_leagues.append(list_of_leagues_raw[x])
+
 
 # generate_league__ids
 
