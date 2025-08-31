@@ -1,3 +1,5 @@
+
+#%%
 import nfl_data_py as nfl
 import matplotlib.pyplot as plt
 import numpy as np
@@ -9,6 +11,8 @@ import data_visualization as dv
 import json
 import requests as rq
 import time
+
+wheel = dv.ColorWheel()
 # %%
 
 player_list= rq.get("https://api.sleeper.app/v1/players/nfl").json()
@@ -70,6 +74,8 @@ for i in range(len(list_of_leagues)):
 
 Interesting_Players_list = ['Ashton Jeanty','Travis Hunter','Omarion Hampton','Cameron Ward','Tetairoa McMillan']#,'TreVeyon Henderson']
 Interesting_Players_list = ['Ashton Jeanty','Travis Hunter','Omarion Hampton']
+Interesting_Players_list = ['Luther Burden','Jayden Higgins','Tre Harris']
+Interesting_Players_list = ['Travis Hunter']
 
 list_player_ids = []
 for i in range(len(Interesting_Players_list)):
@@ -88,9 +94,9 @@ curr_ax.spines[['right', 'top']].set_visible(False)
 
 curr_ax.set_xlabel(f'Pick No.')
 curr_ax.set_ylabel('Frequency')
-curr_ax.set_xticks(np.arange(1,11))
+curr_ax.set_xticks(np.arange(1,25))
 
-curr_ax.set_xlim(-.1,10.1)
+curr_ax.set_xlim(-.1,24.1)
 
 Density = True
 if Density:
@@ -102,7 +108,7 @@ else:
     curr_ax.set_ylim(0, 15)
     curr_ax.set_yticks(np.arange(0,16,3))
     norm = 1
-bins = np.arange(-.5,11.5,1)
+bins = np.arange(-.5,24.5,1)
 for i in range(len(Interesting_Players_list)):
     curr_array = all_draft_dataframes[all_draft_dataframes['player_id'] == list_player_ids[i]]['pick_no'].values
 
@@ -117,13 +123,13 @@ dv.Custom_Legend(curr_ax,Interesting_Players_list,colors[0:len(Interesting_Playe
 
 
 
-curr_ax.annotate("Jeanty's been drafted 1.01\n100% of the time",xy = (1.8,13/norm), xytext = (2.8,13/norm),
-                 arrowprops = dict(facecolor = colors[0],edgecolor = wheel.none),
-                 ha = "left",va = "center",color = colors[0])
+# curr_ax.annotate("Jeanty's been drafted 1.01\n100% of the time",xy = (1.8,13/norm), xytext = (2.8,13/norm),
+#                  arrowprops = dict(facecolor = colors[0],edgecolor = wheel.none),
+#                  ha = "left",va = "center",color = colors[0])
 
-curr_ax.annotate("Travis is Pretty Evenly\nSpread Between 2-4",xy = (5,5/norm), xytext = (6,7/norm),
-                 arrowprops = dict(facecolor = colors[1],edgecolor = wheel.none),
-                 ha = "left",va = "center",color = colors[1])
+# curr_ax.annotate("Travis is Pretty Evenly\nSpread Between 2-4",xy = (5,5/norm), xytext = (6,7/norm),
+#                  arrowprops = dict(facecolor = colors[1],edgecolor = wheel.none),
+#                  ha = "left",va = "center",color = colors[1])
 
 
 curr_ax.set_title(f"Current Distribution of Draft Picks\n({len(list_of_leagues)} Leagues)")
