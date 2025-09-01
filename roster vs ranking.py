@@ -68,5 +68,6 @@ for i in range(len(my_players_dataframe)):
     my_players_dataframe.loc[i]['Positions'] = temp_string
 
 
+
     
 # %%
