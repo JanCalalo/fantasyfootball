@@ -75,3 +75,9 @@ my_players_dataframe[my_players_dataframe['Positions'].str.contains('DB')]
 # %%
 
 rankings = pd.read_csv('2025_idp_rankings.csv')
+
+#%%
+
+for i,curr_name in my_players_dataframe['Name'].unique():
+
+    my_players_dataframe['player_id'] == i
