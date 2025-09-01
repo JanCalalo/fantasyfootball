@@ -39,17 +39,34 @@ my_roster = rosters[rosters['owner_id'] == my_owner_id]
 my_players = my_roster['players'].values[0]
 #%%
 
-player_list_df = pd.DataFrame.from_dict(player_list,orient = "rows")
+player_list_df = pd.DataFrame.from_dict(player_list,orient = "index")
 #%%
 my_players_dataframe = pd.DataFrame(my_players)
-
-my_players_dataframe['Names'] = ''
+my_players_dataframe.columns = ['player_id']
+my_players_dataframe['Name'] = ''
 
 
 my_players_dataframe['Positions'] = ''
 
-
+ 
 for i in range(len(my_players_dataframe)):
+    
+    curr_player = my_players_dataframe['player_id'][i]
+
+    curr_player_data  = player_list_df.loc[curr_player]
+
+    print(curr_player_data['full_name'],curr_player_data['fantasy_positions'])
+
+    my_players_dataframe.loc[i]['Name'] = curr_player_data['full_name']
+    temp_string = ''
+    for j,x in enumerate(curr_player_data['fantasy_positions']):
+
+        if j == 0:
+            temp_string = x
+        else:
+            temp_string = temp_string +'_' + x
+    my_players_dataframe.loc[i]['Positions'] = temp_string
 
 
-
+    
+# %%
